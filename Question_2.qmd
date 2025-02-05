@@ -1,5 +1,5 @@
 ---
-title: "Question_2"
+title: "Question 2"
 author: "Shane Silverman"
 format: html
 ---
@@ -13,6 +13,8 @@ Quarto enables you to weave together content and executable code into a finished
 When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
 
 ```{r}
+data_airquality <- airquality
+
 mean_temp <- mean(data_airquality[["Temp"]], na.rm = TRUE)
 print(mean_temp)
 sd_temp <- sd(data_airquality[["Temp"]], na.rm = TRUE)
