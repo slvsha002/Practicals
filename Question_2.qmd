@@ -13,7 +13,24 @@ Quarto enables you to weave together content and executable code into a finished
 When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
 
 ```{r}
-1 + 1
+mean_temp <- mean(data_airquality[["Temp"]], na.rm = TRUE)
+print(mean_temp)
+sd_temp <- sd(data_airquality[["Temp"]], na.rm = TRUE)
+print(sd_temp)
+min_temp <- min(data_airquality[["Temp"]], na.rm = TRUE)
+print(min_temp)
+max_temp <- max(data_airquality[["Temp"]], na.rm = TRUE)
+print(max_temp)
+
+mean_ozone <- mean(data_airquality[["Ozone"]], na.rm = TRUE)
+print(mean_ozone)
+sd_ozone <- sd(data_airquality[["Ozone"]], na.rm = TRUE)
+print(sd_ozone)
+min_ozone <- min(data_airquality[["Ozone"]], na.rm = TRUE)
+print(min_ozone)
+max_ozone <- max(data_airquality[["Ozone"]], na.rm = TRUE)
+print(max_ozone)
+
 ```
 
 You can add options to executable code like this 
