@@ -1,31 +1,23 @@
 ---
 title: "Question 1"
-author: "Shane Silverman"
 format: html
 ---
 
-## Quarto
+Find all rows in “airquality” that have missing values. Note that the airquality dataset in R is always available (just type airquality in the console to see it).
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+## Get the data
 
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
 
 ```{r}
 data_airquality <- airquality
-
-missing_rows <- data_airquality[!complete.cases(data_airquality), ]
-
-print(missing_rows)
-
 ```
 
-You can add options to executable code like this 
-
+## Find the rows with missing values
+```{r}
+missing_rows <- data_airquality[!complete.cases(data_airquality), ]
+```
+The rows with missing values are shown below:
 ```{r}
 #| echo: false
-2 * 2
+print(missing_rows)
 ```
-
-The `echo: false` option disables the printing of code (only output is displayed).

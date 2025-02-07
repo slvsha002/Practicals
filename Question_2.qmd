@@ -1,45 +1,41 @@
 ---
 title: "Question 2"
-author: "Shane Silverman"
 format: html
 ---
+Find mean, sd, min, max for each of temperature and ozone level.
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
+## Get the data
 ```{r}
 data_airquality <- airquality
-
-mean_temp <- mean(data_airquality[["Temp"]], na.rm = TRUE)
-print(mean_temp)
-sd_temp <- sd(data_airquality[["Temp"]], na.rm = TRUE)
-print(sd_temp)
-min_temp <- min(data_airquality[["Temp"]], na.rm = TRUE)
-print(min_temp)
-max_temp <- max(data_airquality[["Temp"]], na.rm = TRUE)
-print(max_temp)
-
-mean_ozone <- mean(data_airquality[["Ozone"]], na.rm = TRUE)
-print(mean_ozone)
-sd_ozone <- sd(data_airquality[["Ozone"]], na.rm = TRUE)
-print(sd_ozone)
-min_ozone <- min(data_airquality[["Ozone"]], na.rm = TRUE)
-print(min_ozone)
-max_ozone <- max(data_airquality[["Ozone"]], na.rm = TRUE)
-print(max_ozone)
-
 ```
 
-You can add options to executable code like this 
+## Finding statistical information on 'Temp' data
+```{r}
+temp_stats <- c(
+  mean_temp <- mean(data_airquality[["Temp"]], na.rm = TRUE),
+  sd_temp <- sd(data_airquality[["Temp"]], na.rm = TRUE),
+  min_temp <- min(data_airquality[["Temp"]], na.rm = TRUE),
+  max_temp <- max(data_airquality[["Temp"]], na.rm = TRUE)
+  )
+```
 
 ```{r}
 #| echo: false
-2 * 2
+print(temp_stats)
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+## Finding statistical information on 'Ozone' data
+```{r}
+ozone_stats <- c(
+  mean_ozone <- mean(data_airquality[["Ozone"]], na.rm = TRUE),
+  sd_ozone <- sd(data_airquality[["Ozone"]], na.rm = TRUE),
+  min_ozone <- min(data_airquality[["Ozone"]], na.rm = TRUE),
+  max_ozone <- max(data_airquality[["Ozone"]], na.rm = TRUE)
+)
+```
+
+```{r}
+#| echo: false
+print(ozone_stats)
+```
+
