@@ -1,0 +1,18 @@
+---
+title: "prac2"
+author: "Shane Silverman"
+---
+
+# Question 1: Generate Simulated Data:
+
+```{r}
+set.seed(1)
+x <- runif(100, min=0, max=100) # generate a sequence of numbers from 1 - 100
+e <- rnorm(100, mean = 0, sd = 0.2) # ei ~ N(0, 0.2)
+y <- sin(x / 10) + e # generate y as a noisy sine wave
+```
+# Question 2
+
+# Question 3
+
+
