@@ -1,0 +1,8 @@
+---
+title: "Home"
+author: "Shane Silverman"
+date: today
+format: html
+---
+
+This report contains answers to the practicals from ***Statistical Computing 2025***.
