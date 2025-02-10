@@ -34,7 +34,6 @@ temp_stats <- data.frame(
   )
 )
 ```
-
 ```{r}
 #| echo: false
 kable(temp_stats, col.names = c("Statistic", "Value"))
@@ -52,7 +51,6 @@ ozone_stats <- data.frame(
   )
 )
 ```
-
 ```{r}
 #| echo: false
 kable(ozone_stats, col.names = c("Statistic", "Value"))
@@ -75,7 +73,7 @@ print(result)
 ```
 
 ## Question Four
-Check that you get the same  estimates as when fitting the linear regression model using lm() in R.
+Checking that the same estimates are found as when fitting the linear regression model using lm() in R.
 
 ```{r}
 model_test <- lm(dist ~ speed, data = cars)

@@ -5,4 +5,12 @@ date: today
 format: html
 ---
 
-This report contains answers to the practicals from ***Statistical Computing 2025***.
+This report contains Shane Silverman's answers to the practicals from ***Statistical Computing 2025***.
+
+Here is a link to the git repo: https://github.com/slvsha002/Practicals
+
+See a list of completed practicals below:
+
+1. [Practical One (Prac day 1)](Prac_Day_1.html)
+2. [Practical Two (Prac day 2/3)](Prac_2.html)
+3. [Practical Three (Prac day 4)](Prac_Day_4.html)

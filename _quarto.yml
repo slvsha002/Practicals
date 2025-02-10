@@ -1,5 +1,18 @@
 project:
-  title: "Practical One"
-
-
-
+  type: book
+  render:
+  - index.qmd
+  output-dir: docs
+book:
+  title: Statistical Computing 2025
+  chapters:
+  - index.qmd
+  - Prac_Day_1.qmd
+  - Prac_2.qmd
+  - Prac_Day_4.qmd
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    toc-location: right
