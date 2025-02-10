@@ -2,14 +2,15 @@
 title: "Practical 1"
 ---
 
+```{r echo=FALSE, results='hide'}
+library(knitr)  # For neat table formatting
+```
+
 ## Question One
-Find all rows in “airquality” that have missing values. Note that the airquality dataset in R is always available (just type airquality in the console to see it).
+Find all rows in “airquality” that have missing values.
 
 ```{r}
 data_airquality <- airquality
-```
-
-```{r}
 missing_rows <- data_airquality[!complete.cases(data_airquality), ]
 ```
 The rows with missing values are shown below:
@@ -20,11 +21,6 @@ print(missing_rows)
 
 ## Question Two
 Find mean, sd, min, max for each of temperature and ozone level.
-
-```{r}
-library(knitr)  # For neat table formatting
-data_airquality <- airquality
-```
 
 ### Finding statistical information on 'Temp' data
 ```{r}
@@ -64,9 +60,6 @@ kable(ozone_stats, col.names = c("Statistic", "Value"))
 
 ## Question Three
 
-For linear regression, parameter estimates can be found as follows: 
-Here, Y is the response variable, and X is the design matrix. The cars data (an R data set, also always available in R) contains two variables: speed and distance to stop. Fit a simple linear regression model to these data, i.e. find the  estimates, using the equation above, and matrix calcuations in R.
-
 ```{r}
 data_cars <- cars
 
@@ -74,7 +67,11 @@ Y <- data_cars[["dist"]]
 X <- cbind(1, cars[["speed"]])
 
 beta_hat <- solve(t(X)%*%X) %*% t(X)%*%Y
-print(beta_hat)
+
+result <- data.frame(Estimate = beta_hat)
+row.names(result) <- c("Intercept", "Speed")
+
+print(result)
 ```
 
 ## Question Four

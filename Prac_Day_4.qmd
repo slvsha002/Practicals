@@ -2,26 +2,25 @@
 title: "Practical 3"
 ---
 
-```{r}
+```{r echo=FALSE, results="hide", message=FALSE, warning=FALSE}
 # Install tidyverse if not already installed
 if (!requireNamespace("tidyverse", quietly = TRUE)) {
   install.packages("tidyverse")
 }
 library(tidyverse)
-
 # Install and load nycflights13 for flight data
 if (!requireNamespace("nycflights13", quietly = TRUE)) {
   install.packages("nycflights13")
 }
 library(nycflights13)
-
 library(dplyr)
 ```
 
 ## Question 1
 Display the flights dataset in an alternative format to simply printing it (i.e. running flights).
 ```{r}
-View(flights)
+flights_table <- as_tibble(flights)
+flights_table
 ```
 ## Question 2
 ```{r}
@@ -43,9 +42,9 @@ Explain why the standard deviation is NA for one carrier, and why it is 0 for ot
 ## Explanation: 
 #               NA - This happens when there is only one trip, and thus one distance                         for a carrier, meaning sd cannot be computed, resulting in an NA.
 #                0 - This happens when all the distances for a carrier are equal,                            meaning there is no deviation in the trips distances.
-carrier_distance_check <- flights %>%
-  filter(month == 1) %>%
-  group_by(carrier) %>%
+carrier_distance_check <- flights |> 
+  filter(month == 1) |> 
+  group_by(carrier) |> 
   summarise(
     num_flights = n(),
     unique_distances = n_distinct(distance),
@@ -53,7 +52,7 @@ carrier_distance_check <- flights %>%
     sd_distance = sd(distance, na.rm = TRUE)
   )
 # Show carriers where sd is NA or 0
-carrier_distance_check %>%
+carrier_distance_check |> 
   filter(is.na(sd_distance) | sd_distance == 0)
 ```
 ## Question 4
@@ -122,7 +121,6 @@ route_with_max_diff
 
 ```
 ## Question 7
-GET THE DATA FOR QUESTION 7
 ```{r echo=FALSE}
 ## Get the dataset ##
 prac4_df <- structure(

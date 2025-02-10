@@ -2,7 +2,10 @@
 title: "Practical 2"
 ---
 
-## Question 1: 
+```{r echo=FALSE, results='hide', warning=FALSE, message=FALSE}
+library(ggplot2)
+```
+## Question 1
 Generate Simulated Data
 ```{r}
 set.seed(1)
@@ -14,7 +17,7 @@ e <- rnorm(100, mean = 0, sd = 0.2)
 y <- sin(x / 10) + e 
 ```
 
-## Question 2: 
+## Question 2
 Implement the LOWESS Algorithm
 ```{r}
 customLowess <- function(x, y, f) {
@@ -46,14 +49,17 @@ customLowess <- function(x, y, f) {
 y_smooth <- customLowess(x, y, f=0.2)
 ```
 
-## Question 3: 
+## Question 3
 Comparing with R's built in 'lowess()' function
-```{r}
-# Question 3: Comparing with R's built in 'lowess()' function using ggplot2
-library(ggplot2)
-
-# Generate the LOWESS smoothed data using the built-in function
+```{r message=FALSE, warning=FALSE}
+# Question 3: Comparing with R's built in 'lowess()' function 
 builtin_lowess <- lowess(x, y, f=0.2, iter=0)
+
+```
+
+
+## Plot of all questions
+```{r echo= FALSE, warning=FALSE, message=FALSE}
 
 # Ensure x is sorted before plotting
 sorted_indices <- order(x)
@@ -63,20 +69,18 @@ y_smooth_sorted <- y_smooth[sorted_indices]
 # Create a data frame for plotting
 df <- data.frame(x = x, y = y, y_smooth = y_smooth, 
                  y_builtin = builtin_lowess$y)
-
 # Plot results using ggplot
 ggplot(df, aes(x = x, y = y)) + 
-  geom_point(color = "blue", size = 2) +  # Scatter plot for original data
-  geom_line(aes(x = x_sorted, y = y_smooth_sorted), color = "green", size = 1.5) +  # Custom LOWESS line
-  geom_line(aes(x = x_sorted, y = y_builtin), color = "red", size = 1.5, linetype = "dashed") +  # R lowess() line
-  labs(title = "Custom LOWESS Smoothing vs R's lowess()", 
-       x = "X", y = "Y") + 
+  geom_point(aes(color = "Original Data"), size = 2) +  # Scatter plot for original data
+  geom_line(aes(x = x_sorted, y = y_smooth_sorted, color = "Custom LOWESS"), size = 1.5) +  # Custom LOWESS line
+  geom_line(aes(x = x_sorted, y = y_builtin, color = "R's LOWESS"), size = 1.5, linetype = "dashed") +  # R lowess() line
+  labs(title = "Custom LOWESS Smoothing vs R's lowess()") + 
   theme_minimal() + 
   theme(legend.position = "top") + 
-  scale_color_manual(values = c("green", "red")) + 
-  guides(color = guide_legend(title = "Legend")) +
-  scale_linetype_manual(values = c("solid", "dashed"))
-
+  scale_color_manual(values = c("Original Data" = "blue", 
+                                "Custom LOWESS" = "green", 
+                                "R's LOWESS" = "red")) + 
+  guides(color = guide_legend(title = "Legend"))
 
 ```
 
