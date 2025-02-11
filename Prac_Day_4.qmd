@@ -1,6 +1,7 @@
 ---
 title: "Practical 3"
 ---
+***PLEASE NOTE: On many occasions, I have only shown the first 5 rows of tables generated inorder to ensure the readability of the webpage as a whole.***
 
 ```{r echo=FALSE, results="hide", message=FALSE, warning=FALSE}
 # Install tidyverse if not already installed
@@ -12,17 +13,25 @@ library(tidyverse)
 if (!requireNamespace("nycflights13", quietly = TRUE)) {
   install.packages("nycflights13")
 }
+if (!requireNamespace("remotes", quietly = TRUE)) {
+  install.packages("remotes")
+}
+remotes::install_github("SATVILab/UtilsDataRSV")
+
+#Libraries
 library(nycflights13)
 library(dplyr)
+library(knitr)
 ```
 
-## Question 1
+## Question One
 Display the flights dataset in an alternative format to simply printing it (i.e. running flights).
 ```{r}
-flights_table <- as_tibble(flights)
-flights_table
+flights_table <- flights
+glimpse(flights_table)
 ```
-## Question 2
+## Question Two
+The code below is a rewrite, using '*piping*', of code provided on the practical breakdown:
 ```{r}
 dist_tbl <- flights |> 
   filter(month ==1) |> 
@@ -33,15 +42,15 @@ dist_tbl <- flights |>
   ) |> 
   arrange(mean_distance)
 
-dist_tbl
+kable(dist_tbl)
 ```
-## Question 3
-Explain why the standard deviation is NA for one carrier, and why it is 0 for others. Demonstrate your answer using code.
+## Question Three
+Explaining why the standard deviation is NA for one carrier, and why it is 0 for others. 
 ```{r}
 
 ## Explanation: 
-#               NA - This happens when there is only one trip, and thus one distance                         for a carrier, meaning sd cannot be computed, resulting in an NA.
-#                0 - This happens when all the distances for a carrier are equal,                            meaning there is no deviation in the trips distances.
+# NA - This happens when there is only one trip, and thus one distance                         for a carrier, meaning sd cannot be computed, resulting in an NA.
+# 0 - This happens when all the distances for a carrier are equal,                            meaning there is no deviation in the trips distances.
 carrier_distance_check <- flights |> 
   filter(month == 1) |> 
   group_by(carrier) |> 
@@ -55,18 +64,21 @@ carrier_distance_check <- flights |>
 carrier_distance_check |> 
   filter(is.na(sd_distance) | sd_distance == 0)
 ```
-## Question 4
+
+## Question Four
+A dataframe where the 'carriers' are along the columns, and the rows are the average departure delay flown by each carrier in each month.
 ```{r}
 delay_df <- flights |> 
   group_by(month, carrier) |> 
   summarise(avg_dep_delay = mean(dep_delay, na.RM = TRUE)) |> 
   pivot_wider(names_from = carrier, values_from = avg_dep_delay)
 
-delay_df
+kable(delay_df)
 ```
-## Question 5
-```{r}
 
+## Question Five
+The proportion of flights that were delayed but arrived on or before time.
+```{r}
 recovery_to_on_time <- flights |> 
   summarise(
     total_flights = n(),
@@ -74,18 +86,23 @@ recovery_to_on_time <- flights |>
     proportion = delayed_but_on_time / total_flights
   )
 
-recovery_to_on_time
+kable(recovery_to_on_time)
 ```
-## Question 6
+## Question Six
+
+### i) Routes that more than one airline flies:
 ```{r}
-## Routes that more than one airline flies:
 routes <- flights |> 
   group_by(origin, dest) |> 
   summarise(num_airlines = n_distinct(carrier)) |> 
   filter(num_airlines > 1)
 
-routes
-## The average arrival delay for each airline (excl NAs), for each route:
+kable(head(routes, 5))
+```
+
+### ii) The average arrival delay for each airline (excl NAs), for each route:
+```{r}
+
 avg_arrival_delay <- flights |> 
   semi_join(routes, by = c("origin", "dest")) |> 
   group_by(origin, dest, carrier) |> 
@@ -94,9 +111,11 @@ avg_arrival_delay <- flights |>
 avg_arrival_delay <- avg_arrival_delay |> 
   left_join(airlines, by = "carrier")
 
-avg_arrival_delay
+kable(head(avg_arrival_delay, 5))
+```
 
-## The airline with the worst and best average arrival delay, for each route:
+### iii) The airline with the worst and best average arrival delay, for each route:
+```{r}
 best_worst_delay <- avg_arrival_delay |> 
   group_by(origin, dest) |> 
   summarise(
@@ -105,8 +124,11 @@ best_worst_delay <- avg_arrival_delay |>
     worst_airline = carrier[which.max(avg_arr_delay)],
     worst_delay = max(avg_arr_delay)
   )
-best_worst_delay
-## The route with the greatest difference between the greatest and worst performing airlines:
+kable(head(best_worst_delay, 5))
+```
+
+### iv) The route with the greatest difference between the greatest and worst performing airlines:
+```{r}
 best_worst_delay <- best_worst_delay |> 
   mutate(delay_diff = worst_delay - best_delay)
 
@@ -115,17 +137,17 @@ max_delay_diff <- max(best_worst_delay$delay_diff, na.rm = TRUE)
 route_with_max_diff <- best_worst_delay |> 
   filter(delay_diff == max_delay_diff)
 
-route_with_max_diff
-
-## The reason for this difference above:
-
+kable(route_with_max_diff)
 ```
-## Question 7
+
+### v) The reason for this difference above:
+A variety of different factors such as technical problems, landing traffic, flight optimisation and type of plane used can all create a difference in why one airline is faster than another.
+
+
+## Question Seven
 ```{r echo=FALSE}
 ## Get the dataset ##
-prac4_df <- structure(
-  list(
-    id = c(
+prac4_df <- structure(list(id = c(
       "id_1", "id_2", "id_3", "id_4", "id_5", "id_6", "id_7", "id_8", "id_9", "id_10", "id_11", "id_12", "id_13","id_14", "id_15", "id_16", "id_17", "id_18", "id_19","id_20", "id_21", "id_22", "id_23", "id_24", "id_25", "id_26", "id_27", "id_28", "id_29", "id_30", "id_31", "id_32", "id_33", "id_34", "id_35", "id_36", "id_37", "id_38", "id_39", "id_40", "id_41", "id_42", "id_43", "id_44", "id_45", "id_46", "id_47", "id_48",  "id_49", "id_50"),
     age = c(50L, 34L, 70L, 33L, 22L, 61L, 69L,  73L, 62L, 56L, 71L, 33L, 73L, 44L, 45L, 46L,  47L, 76L, 28L, 48L, 54L, 27L, 45L, 26L, 61L, 28L, 38L, 55L, 33L, 36L, 62L, 58L, 72L, 31L, 34L, 42L, 46L, 79L, 72L), 
     gender = c("male", "male", "male", "female","female", "male", "female", "male", "male", "female","male", "male", "female", "male", "male", "male", "male", "female", "male", "male", "male", "male", "female", "femal", "male", "female", "female", "female", "female", "male", "female", "female", "female", "male", "male", "female", "male", "female", "female", "male", "female", "female", "male", "male", "female", "male", "male", "male", "female"), height = c(174.4, 197.7, 174.1, 194.5, NA, 180.4, 170.5, 157.4, 196.8, 165.1, 153, 197.4, 186, 157.1, 177.5, 197.7, 179.3, 170.2, 182.4, NA, 165.4, 161, 168.5, 199.2, 157.7,154.6, 157.1, 184.5, 181, 194.6, 183.6, 186.9, 176.1, 183, 191.1,189.3, 199, 172, 165.6, 170.5, 150.5, 159.2, 192.1, 161.6, 162, 153.8, 162.3, 186.6, 192.4, 174.9), 
@@ -146,15 +168,5 @@ prac4_df <- structure(
 ```
 
 ```{r}
-if (!requireNamespace("remotes", quietly = TRUE)) {
-  install.packages("remotes")
-}
-remotes::install_github("SATVILab/UtilsDataRSV")
-
 UtilsDataRSV::view_cols(prac4_df)
 ```
-
-
-
-
-

@@ -1,6 +1,7 @@
 ---
 title: "Practical 2"
 ---
+***PLEASE NOTE: On many occasions, I have only shown the first 5 rows of tables generated inorder to ensure the readability of the webpage as a whole.***
 
 ```{r echo=FALSE, results='hide', warning=FALSE, message=FALSE}
 library(ggplot2)
@@ -18,18 +19,18 @@ y <- sin(x / 10) + e
 ```
 
 ## Question Two
-Implement the LOWESS Algorithm
+Implement the custom LOWESS Algorithm
 ```{r}
 customLowess <- function(x, y, f) {
   n <- length(x) # set n to the number of x values
-  k <- ceiling(f*n) # number of closest neighbours used for xi
+  k <- ceiling(f * n) # number of closest neighbours used for xi
   y_hat <- numeric(n) # create space for smoothed y values
   
-  distances_matrix <- abs(outer(x,x, "-")) # calculate the distance between xj and xi
+  distances_matrix <- abs(outer(x, x, "-")) # calculate the distance between xj and xi
   
   neighbours <- apply(distances_matrix, 1, function(d) order(d)[1:k])
   d_max <- apply(distances_matrix, 1, function(d) max(d[order(d)[1:k]]))
-  weights_matrix <- (1-(distances_matrix / d_max)^3)^3
+  weights_matrix <- (1 - (distances_matrix / d_max) ^ 3) ^ 3
   weights_matrix[distances_matrix > d_max] <- 0
   
   X <- cbind(1, x)
@@ -39,9 +40,9 @@ customLowess <- function(x, y, f) {
     X_subset <- X[neighbour, ,drop=FALSE]
     Y_subset <- y[neighbour]
     
-    beta <- solve( t(X_subset)%*%W%*%X_subset ) %*% t(X_subset)%*%W%*%Y_subset
+    beta <- solve( t(X_subset) %*% W %*% X_subset ) %*% t(X_subset) %*% W %*% Y_subset
     
-    return(beta[1]+beta[2]*x[i])
+    return(beta[1] + beta[2] * x[i])
   })
   return(y_hat)
 }
@@ -54,9 +55,7 @@ Comparing with R's built in 'lowess()' function
 ```{r message=FALSE, warning=FALSE}
 # Question 3: Comparing with R's built in 'lowess()' function 
 builtin_lowess <- lowess(x, y, f=0.2, iter=0)
-
 ```
-
 
 ## Plot of all questions
 ```{r echo= FALSE, warning=FALSE, message=FALSE}

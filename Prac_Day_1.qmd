@@ -1,6 +1,7 @@
 ---
 title: "Practical 1"
 ---
+***PLEASE NOTE: On many occasions, I have only shown the first 5 rows of tables generated inorder to ensure the readability of the webpage as a whole.***
 
 ```{r echo=FALSE, results='hide'}
 library(knitr)  # For neat table formatting
@@ -13,10 +14,9 @@ Find all rows in “airquality” that have missing values.
 data_airquality <- airquality
 missing_rows <- data_airquality[!complete.cases(data_airquality), ]
 ```
-The rows with missing values are shown below:
 ```{r}
 #| echo: false
-print(missing_rows)
+kable(missing_rows, caption = "Rows with Missing Values")
 ```
 
 ## Question Two
@@ -57,27 +57,28 @@ kable(ozone_stats, col.names = c("Statistic", "Value"))
 ```
 
 ## Question Three
-
+Fit a simple linear regression model to these data, i.e. find the 'Beta' estimates, using the equation above (mentioned in the prac breakdown), and matrix calculations in R.
 ```{r}
 data_cars <- cars
 
 Y <- data_cars[["dist"]]
 X <- cbind(1, cars[["speed"]])
 
-beta_hat <- solve(t(X)%*%X) %*% t(X)%*%Y
-
-result <- data.frame(Estimate = beta_hat)
-row.names(result) <- c("Intercept", "Speed")
-
-print(result)
+beta_hat <- solve( t(X) %*% X ) %*% t(X) %*% Y
+```
+```{r echo=FALSE}
+result <- data.frame(t(beta_hat))
+colnames(result) <- c("(Intercept)", "Speed")
+print(result, row.names = FALSE)
 ```
 
 ## Question Four
 Checking that the same estimates are found as when fitting the linear regression model using lm() in R.
-
 ```{r}
 model_test <- lm(dist ~ speed, data = cars)
-summary(model_test)
+```
+```{r echo=FALSE}
+coef(model_test)
 ```
 
 

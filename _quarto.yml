@@ -16,3 +16,8 @@ format:
     toc: true
     toc-depth: 3
     toc-location: right
+    number-sections: false
+    
+execute:
+  warning: false
+  messages: false

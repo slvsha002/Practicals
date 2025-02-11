@@ -7,7 +7,7 @@ format: html
 
 This report contains Shane Silverman's answers to the practicals from ***Statistical Computing 2025***.
 
-Here is a link to the git repo: https://github.com/slvsha002/Practicals
+Here is a link to the git repo: [Shane Silverman_GITHUB](https://github.com/slvsha002/Practicals)
 
 See a list of completed practicals below:
 
